@@ -1,1 +1,1 @@
-py2applet
+py2app
