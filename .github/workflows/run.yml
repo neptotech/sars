@@ -34,7 +34,7 @@ jobs:
     - name: Run .app file and check output
       run: |
         # Replace "YourAppName.app" with the actual name of your .app file
-        ./dist/YourAppName.app/Contents/MacOS/YourAppName > output.txt
+        ./dist/MyApplication.app/Contents/MacOS/MyApplication > output.txt
         cat output.txt
         if grep -q "0" output.txt; then
           echo "Output contains 0, proceeding"
