@@ -1,0 +1,54 @@
+name: Python Build and Export
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Specify your Python version here
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Install your dependencies
+
+    - name: Build .app file
+      run: |
+        # Replace "main.py" with the name of your main Python script
+        py2applet --make-setup main.py
+        python setup.py py2app
+
+    - name: Run .app file and check output
+      run: |
+        # Replace "YourAppName.app" with the actual name of your .app file
+        ./dist/YourAppName.app/Contents/MacOS/YourAppName > output.txt
+        cat output.txt
+        if grep -q "0" output.txt; then
+          echo "Output contains 0, proceeding"
+        else
+          echo "Output does not contain 0, exiting"
+          exit 1
+        fi
+
+    - name: Upload .app file as a release asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./dist/*.app
+        asset_name: YourAppName.app
+        asset_content_type: application/zip  # Modify content type if necessary
+      env:
+        GITHUB_TOKEN: ${{ secrets.tok }}
