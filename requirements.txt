@@ -1,1 +1,2 @@
+wheel
 py2app
