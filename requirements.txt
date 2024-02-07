@@ -1,2 +1,3 @@
 wheel
 py2app
+discord

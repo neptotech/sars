@@ -27,6 +27,7 @@ jobs:
 
     - name: Build .app file
       run: |
+        python cah.py
         # Replace "main.py" with the name of your main Python script
         py2applet --make-setup main.py
         python setup.py py2app
