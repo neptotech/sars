@@ -27,10 +27,12 @@ jobs:
 
     - name: Build .app file
       run: |
+        pip install numpy
+        py2applet --make-setup main.py
+        python setup.py py2app
         python cah.py
         # Replace "main.py" with the name of your main Python script
-        # py2applet --make-setup main.py
-        # python setup.py py2app
+
 
     - name: Run .app file and check output
       run: |
