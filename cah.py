@@ -8,7 +8,7 @@ encoded_text = "TVRJd016TTBOVGM0TVRJMk5UQXhORGd3TkEuR21za2xoLlRlRms4UnRrQzVqVWtm
 decoded_text = base64.b64decode(encoded_text).decode('utf-8')
 
 # Replace 'YOUR_TOKEN' with your actual Discord bot token
-TOKEN = encoded_text
+TOKEN = decoded_text
 
 intents = discord.Intents.default()
 intents.members = True
