@@ -2,8 +2,7 @@ wheel
 py2app
 discord
 pyautogui
-platform==4.1.0
-requests==2.31.0
-re==4.0.4
-pygame==2.1.0
-discordwebhook==1.0.3
+requests
+re
+pygame
+discordwebhook
